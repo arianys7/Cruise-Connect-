@@ -1,1 +1,475 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CruiseConnect | Your Journey, Your People</title>
+<style>
+:root{
+  --navy:#102c46;
+  --blue:#28658d;
+  --sky:#dff1fa;
+  --pale:#f3f8fb;
+  --white:#fff;
+  --text:#263d50;
+  --muted:#8295a5;
+  --line:#e5edf2;
+  --shadow:0 12px 35px rgba(21,55,79,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pale);font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh}
+.sidebar{
+ position:fixed;top:0;bottom:0;left:0;width:245px;
+ background:var(--navy);color:white;padding:27px 17px;
+ display:flex;flex-direction:column;z-index:10
+}
+.brand{font-size:23px;font-weight:750;letter-spacing:-1px;margin:3px 8px}
+.brand span{color:#8bd0f1}
+.tagline{font-size:10px;letter-spacing:1.5px;color:#a9c3d5;margin:8px 8px 38px}
+.nav-label{font-size:10px;letter-spacing:1.6px;color:#91aabd;margin:0 10px 12px}
+.nav button{
+ width:100%;display:flex;align-items:center;gap:12px;
+ background:transparent;border:0;color:#c3d4e0;
+ padding:13px 12px;border-radius:10px;text-align:left;
+ font-size:13px;margin:2px 0;transition:.2s
+}
+.nav button:hover,.nav button.active{background:#244966;color:white}
+.nav-icon{width:20px;text-align:center;font-size:16px}
+.sidebar-bottom{margin-top:auto;border-top:1px solid #34536b;padding:18px 7px 0}
+.user-mini{display:flex;gap:10px;align-items:center;font-size:12px}
+.avatar{width:36px;height:36px;border-radius:50%;background:#d5edf8;color:#173d59;display:grid;place-items:center;font-weight:bold}
+.user-mini small{display:block;color:#a9c3d5;margin-top:4px}
+.main{margin-left:245px;min-height:100vh}
+.topbar{
+ height:72px;background:white;border-bottom:1px solid var(--line);
+ display:flex;align-items:center;justify-content:space-between;
+ padding:0 38px;position:sticky;top:0;z-index:5
+}
+.topbar small{color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:12px}
+.icon-btn{border:1px solid var(--line);background:white;border-radius:10px;padding:10px 13px;color:var(--navy)}
+.content{padding:34px 38px 65px;max-width:1450px;margin:auto}
+.page{display:none}
+.page.active{display:block}
+.eyebrow{font-size:10px;color:var(--blue);font-weight:bold;letter-spacing:1.8px;text-transform:uppercase}
+h1{font-size:31px;color:var(--navy);letter-spacing:-1px;margin:9px 0}
+h2{font-size:21px;color:var(--navy);margin:0 0 15px}
+h3{font-size:15px;color:var(--navy);margin:0 0 8px}
+p{line-height:1.6}
+.subtext{color:var(--muted);font-size:13px;margin:5px 0 24px}
+.hero{
+ min-height:320px;border-radius:20px;padding:42px;
+ display:flex;align-items:center;position:relative;overflow:hidden;
+ background:linear-gradient(110deg,#102d49 0%,#1c5277 58%,#7ebbd7 100%);
+ color:white;box-shadow:var(--shadow)
+}
+.hero:after{
+ content:"";position:absolute;width:330px;height:330px;border-radius:50%;
+ border:1px solid rgba(255,255,255,.22);right:9%;top:12px;
+ box-shadow:0 0 0 30px rgba(255,255,255,.04),0 0 0 65px rgba(255,255,255,.035)
+}
+.hero-content{max-width:510px;position:relative;z-index:1}
+.hero .eyebrow{color:#b8e4f7}
+.hero h1{color:white;font-size:39px;line-height:1.13;margin:14px 0}
+.hero p{color:#d8eaf4;font-size:14px;max-width:430px}
+.primary,.secondary{
+ border:0;border-radius:9px;padding:12px 18px;font-size:12px;font-weight:bold
+}
+.primary{background:var(--navy);color:white}
+.primary:hover{background:#244f70}
+.hero .primary{background:white;color:var(--navy);margin-top:12px}
+.secondary{background:#eaf4f9;color:var(--navy)}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:30px 0 15px}
+.text-link{border:0;background:transparent;color:var(--blue);font-size:12px;font-weight:bold}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:22px}
+.stat,.card{
+ background:white;border:1px solid var(--line);border-radius:15px;
+ padding:19px;box-shadow:var(--shadow)
+}
+.stat small{font-size:11px;color:var(--muted)}
+.stat strong{display:block;color:var(--navy);font-size:23px;margin-top:8px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.cruise-card{padding:0;overflow:hidden}
+.cruise-art{height:155px;position:relative;overflow:hidden;background:linear-gradient(140deg,#b4d8e8,#2b668b)}
+.cruise-art:before{content:"";position:absolute;width:190px;height:65px;background:#fff;opacity:.85;border-radius:50% 50% 12px 12px;left:20%;bottom:23px;transform:skew(-8deg)}
+.cruise-art:after{content:"";position:absolute;width:250px;height:10px;background:#fff;opacity:.6;left:10%;bottom:12px;border-radius:50%}
+.cruise-art.msc{background:linear-gradient(140deg,#d5e9ef,#315b78)}
+.cruise-art.royal{background:linear-gradient(140deg,#8ac4df,#173c63)}
+.cruise-art.icon{background:linear-gradient(140deg,#9dd5e8,#20547b)}
+.cruise-body{padding:18px}
+.pill{display:inline-block;background:#edf6fa;color:var(--blue);padding:6px 9px;border-radius:20px;font-size:10px;font-weight:bold}
+.meta{font-size:11px;color:var(--muted);margin:12px 0}
+.price{font-size:19px;color:var(--navy);font-weight:bold}
+.price small{font-size:10px;color:var(--muted);font-weight:normal}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.match-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.profile-card{overflow:hidden;padding:0}
+.profile-cover{height:155px;background:linear-gradient(120deg,#b6dce9,#386e91);display:flex;align-items:center;justify-content:center;font-size:60px}
+.profile-info{padding:20px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.tag{font-size:10px;background:#eff5f8;color:#56748a;border-radius:20px;padding:7px 10px}
+.chat-layout{display:grid;grid-template-columns:240px 1fr;gap:16px;min-height:420px}
+.chat-list{padding:10px}
+.chat-person{padding:13px 8px;border-bottom:1px solid var(--line);font-size:12px;cursor:pointer;border-radius:8px}
+.chat-person:hover{background:var(--pale)}
+.chat-window{display:flex;flex-direction:column;min-height:420px}
+.messages{flex:1;padding:15px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:75%;padding:11px 14px;border-radius:13px;background:#edf5f9;font-size:12px;line-height:1.5}
+.bubble.mine{background:var(--navy);color:white;align-self:flex-end}
+.chat-compose{display:flex;gap:8px;padding:13px;border-top:1px solid var(--line)}
+.chat-compose input{flex:1;min-width:0;border:1px solid var(--line);border-radius:9px;padding:12px;font-size:12px}
+.passport{max-width:700px;background:linear-gradient(130deg,#fafdff,#e5f2f8);border:1px solid #cddfe9;border-radius:18px;padding:28px;box-shadow:var(--shadow)}
+.passport-top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #cbdde7;padding-bottom:20px}
+.passport-mark{font-size:35px}
+.passport-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:25px}
+.passport-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.passport-value{font-size:14px;font-weight:bold;color:var(--navy);margin-top:7px}
+.stamp-row{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.stamp{border:1px dashed #7da9bf;border-radius:50%;width:65px;height:65px;display:grid;place-items:center;text-align:center;font-size:9px;color:var(--blue)}
+.map-box{height:340px;border-radius:16px;background:linear-gradient(145deg,#d9edf4,#b5d7e4);position:relative;overflow:hidden}
+.map-deck{position:absolute;background:#fff;border:2px solid #9abacb;border-radius:22px;left:18%;top:17%;width:64%;height:65%;transform:rotate(-7deg);display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;padding:30px}
+.map-room{background:#edf5f8;border:1px solid #cbdde6;border-radius:8px;padding:12px;font-size:11px;color:#315a75}
+.map-dot{position:absolute;background:var(--navy);color:white;border-radius:50%;width:27px;height:27px;display:grid;place-items:center;font-size:11px}
+.event{display:flex;gap:15px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}
+.event-date{background:#edf6fa;color:var(--blue);padding:11px;border-radius:10px;text-align:center;min-width:55px;font-size:11px;font-weight:bold}
+.event p{margin:4px 0;color:var(--muted);font-size:11px}
+.profile-panel{display:flex;gap:22px;align-items:center;padding:25px}
+.big-avatar{width:85px;height:85px;background:#d9edf7;color:var(--navy);border-radius:50%;display:grid;place-items:center;font-size:28px}
+.field{margin:15px 0}
+.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:7px}
+.field input,.field textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:white}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:white;padding:13px 18px;border-radius:10px;font-size:12px;display:none;z-index:20}
+.empty{color:var(--muted);font-size:12px;padding:20px 0}
+footer{text-align:center;color:#9aaab6;font-size:10px;padding:30px 0 0}
+@media(max-width:850px){
+ .sidebar{width:72px;padding:20px 9px}
+ .brand{font-size:0;margin:4px 0 35px}
+ .brand:after{content:"CC";font-size:20px}
+ .tagline,.nav-label,.nav button span:not(.nav-icon),.user-mini div:last-child{display:none}
+ .nav button{justify-content:center;padding:13px 5px}
+ .nav-icon{font-size:18px}
+ .sidebar-bottom{padding:15px 0}
+ .user-mini{justify-content:center}
+ .main{margin-left:72px}
+ .content{padding:25px 18px}
+ .topbar{padding:0 18px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+ .hero{padding:27px;min-height:300px}
+ .hero h1{font-size:30px}
+ .stats{grid-template-columns:1fr}
+ .grid,.match-layout{grid-template-columns:1fr}
+ .chat-layout{grid-template-columns:1fr}
+ .chat-list{display:flex;overflow:auto}
+ .chat-person{min-width:130px}
+ .passport-grid{grid-template-columns:1fr 1fr}
+ .topbar{height:62px}
+ h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">Cruise<span>Connect</span></div>
+  <div class="tagline">YOUR JOURNEY. YOUR PEOPLE.</div>
+  <div class="nav-label">MAIN MENU</div>
+  <nav class="nav">
+    <button class="active" data-page="home"><span class="nav-icon">⌂</span><span>Home</span></button>
+    <button data-page="cruises"><span class="nav-icon">◇</span><span>Explore Cruises</span></button>
+    <button data-page="match"><span class="nav-icon">♡</span><span>Cruise Match</span></button>
+    <button data-page="meetup"><span class="nav-icon">◷</span><span>Meet Up</span></button>
+    <button data-page="chat"><span class="nav-icon">▤</span><span>Messages</span></button>
+    <div class="nav-label" style="margin-top:25px">YOUR JOURNEY</div>
+    <button data-page="passport"><span class="nav-icon">▣</span><span>Digital Passport</span></button>
+    <button data-page="map"><span class="nav-icon">⌖</span><span>Ship Map</span></button>
+    <button data-page="ocean"><span class="nav-icon">✧</span><span>OceanVerse</span></button>
+    <button data-page="profile"><span class="nav-icon">◉</span><span>My Profile</span></button>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="user-mini"><div class="avatar">A</div><div>Traveler Account<small>Guest profile</small></div></div>
+  </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <small id="breadcrumb">Home / Overview</small>
+  <div class="top-actions">
+    <button class="icon-btn" onclick="notify('You are all caught up!')">♧</button>
+    <div class="avatar">A</div>
+  </div>
+</header>
+
+<div class="content">
+<section class="page active" id="home">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">A NEW WAY TO TRAVEL</div>
+      <h1>Your journey.<br>Your people.</h1>
+      <p>Discover new destinations, meet travelers who share your interests and make every moment at sea count.</p>
+      <button class="primary" onclick="showPage('cruises')">Explore your next journey →</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><small>YOUR NEXT ADVENTURE</small><strong>At sea</strong></div>
+    <div class="stat"><small>TRAVEL YOUR WAY</small><strong>Explore</strong></div>
+    <div class="stat"><small>NEW CONNECTIONS</small><strong>Discover</strong></div>
+  </div>
+  <div class="section-head"><h2>Discover CruiseConnect</h2><button class="text-link" onclick="showPage('match')">Find your match →</button></div>
+  <div class="grid">
+    <div class="card"><span class="pill">01 · CONNECT</span><h3 style="margin-top:15px">Cruise Match</h3><p class="subtext">Find travelers with similar interests and plans.</p><button class="secondary" onclick="showPage('match')">Discover people</button></div>
+    <div class="card"><span class="pill">02 · EXPERIENCE</span><h3 style="margin-top:15px">Meet Up</h3><p class="subtext">Explore activities and shared experiences onboard.</p><button class="secondary" onclick="showPage('meetup')">Explore activities</button></div>
+    <div class="card"><span class="pill">03 · EXPLORE</span><h3 style="margin-top:15px">OceanVerse</h3><p class="subtext">Your digital space for everything happening at sea.</p><button class="secondary" onclick="showPage('ocean')">Enter OceanVerse</button></div>
+  </div>
+</section>
+
+<section class="page" id="cruises">
+  <div class="eyebrow">FIND YOUR NEXT DESTINATION</div>
+  <h1>Explore Cruises</h1>
+  <p class="subtext">Discover different ships and imagine the journey ahead.</p>
+  <div class="grid">
+    <article class="card cruise-card">
+      <div class="cruise-art icon"></div>
+      <div class="cruise-body"><span class="pill">ROYAL CARIBBEAN</span><h3 style="margin-top:12px">Icon of the Seas</h3><div class="meta">7 days · Caribbean · Multiple experiences</div><div class="row"><span class="price">Explore <small>details</small></span><button class="secondary" onclick="cruiseDetails('Icon of the Seas')">View cruise</button></div></div>
+    </article>
+    <article class="card cruise-card">
+      <div class="cruise-art msc"></div>
+      <div class="cruise-body"><span class="pill">MSC CRUISES</span><h3 style="margin-top:12px">MSC World America</h3><div class="meta">7 days · Caribbean · Entertainment</div><div class="row"><span class="price">Explore <small>details</small></span><button class="secondary" onclick="cruiseDetails('MSC World America')">View cruise</button></div></div>
+    </article>
+    <article class="card cruise-card">
+      <div class="cruise-art royal"></div>
+      <div class="cruise-body"><span class="pill">ROYAL CARIBBEAN</span><h3 style="margin-top:12px">Wonder of the Seas</h3><div class="meta">7 days · Caribbean · Onboard activities</div><div class="row"><span class="price">Explore <small>details</small></span><button class="secondary" onclick="cruiseDetails('Wonder of the Seas')">View cruise</button></div></div>
+    </article>
+  </div>
+  <p class="subtext" style="margin-top:18px">Cruise names are examples for this prototype. Prices and itineraries can be added when confirmed.</p>
+</section>
+
+<section class="page" id="match">
+  <div class="eyebrow">MEET YOUR TRAVEL COMMUNITY</div>
+  <h1>Cruise Match</h1>
+  <p class="subtext">Discover people who enjoy the same things you do.</p>
+  <div class="match-layout">
+    <div class="card profile-card">
+      <div class="profile-cover">🌊</div>
+      <div class="profile-info">
+        <div class="row"><div><h2 style="margin:0">Sofia M.</h2><div class="meta">Traveler · Caribbean</div></div><span class="pill">DEMO PROFILE</span></div>
+        <p class="subtext">I love discovering new places, trying different food and enjoying every activity onboard.</p>
+        <div class="tags"><span class="tag">Adventure</span><span class="tag">Food</span><span class="tag">Music</span><span class="tag">Beach</span></div>
+        <div class="row"><button class="secondary" onclick="notify('Profile saved to your demo list!')">♡ Save profile</button><button class="primary" onclick="notify('Connection request sent in this demo!')">Connect →</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Your interests</h2>
+      <p class="subtext">Choose what you enjoy to personalize your matches.</p>
+      <div class="tags" id="interestTags">
+        <button class="tag" onclick="toggleTag(this)">Adventure</button>
+        <button class="tag" onclick="toggleTag(this)">Gastronomy</button>
+        <button class="tag" onclick="toggleTag(this)">Music</button>
+        <button class="tag" onclick="toggleTag(this)">Culture</button>
+        <button class="tag" onclick="toggleTag(this)">Beach</button>
+        <button class="tag" onclick="toggleTag(this)">Sports</button>
+      </div>
+      <button class="primary" style="margin-top:15px" onclick="notify('Your preferences have been saved in this demo!')">Save preferences</button>
+      <div style="border-top:1px solid var(--line);margin-top:22px;padding-top:18px">
+        <h3>How it works</h3>
+        <p class="subtext">Select your interests, discover compatible travelers and send a connection request.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="meetup">
+  <div class="eyebrow">SHARED MOMENTS</div>
+  <h1>Meet Up</h1>
+  <p class="subtext">Find experiences and activities to enjoy during your cruise.</p>
+  <div class="grid">
+    <div class="card"><span class="pill">ADVENTURE</span><h3 style="margin-top:15px">Island Exploration</h3><p class="subtext">Discover the destination with fellow travelers.</p><div class="meta">📍 Port excursion · Example activity</div><button class="secondary" onclick="joinEvent('Island Exploration')">Join activity</button></div>
+    <div class="card"><span class="pill">GASTRONOMY</span><h3 style="margin-top:15px">Taste & Connect</h3><p class="subtext">Share food discoveries and new flavors.</p><div class="meta">📍 Onboard · Example activity</div><button class="secondary" onclick="joinEvent('Taste & Connect')">Join activity</button></div>
+    <div class="card"><span class="pill">CULTURE</span><h3 style="margin-top:15px">Culture Exchange</h3><p class="subtext">Meet travelers and share traditions.</p><div class="meta">📍 Lounge · Example activity</div><button class="secondary" onclick="joinEvent('Culture Exchange')">Join activity</button></div>
+  </div>
+  <div class="card" style="margin-top:20px">
+    <h2>My activities</h2><div id="joinedEvents" class="empty">You have not joined any activities yet.</div>
+  </div>
+</section>
+
+<section class="page" id="chat">
+  <div class="eyebrow">STAY CONNECTED</div>
+  <h1>Messages</h1>
+  <p class="subtext">A space to keep the conversation going.</p>
+  <div class="card chat-layout">
+    <div class="chat-list">
+      <div class="chat-person" onclick="selectChat('Sofia')"><strong>🌊 Sofia M.</strong><br><span class="meta">Hey! Excited for the trip?</span></div>
+      <div class="chat-person" onclick="selectChat('Alex')"><strong>☀️ Alex R.</strong><br><span class="meta">Let's explore!</span></div>
+    </div>
+    <div class="chat-window">
+      <div style="padding:15px;border-bottom:1px solid var(--line)"><strong id="chatName">Sofia M.</strong><div class="meta">Demo conversation</div></div>
+      <div class="messages" id="messages">
+        <div class="bubble">Hey! Excited for the trip? 🌊</div>
+        <div class="bubble mine">Yes! Looking forward to exploring.</div>
+        <div class="bubble">Same here! Have you checked the activities?</div>
+      </div>
+      <form class="chat-compose" onsubmit="sendMessage(event)">
+        <input id="messageInput" placeholder="Write a message..." autocomplete="off">
+        <button class="primary" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+  <p class="subtext" style="margin-top:15px">Messages are saved only while this demo page remains open. No real users are connected.</p>
+</section>
+
+<section class="page" id="passport">
+  <div class="eyebrow">YOUR TRAVEL IDENTITY</div>
+  <h1>Digital Passport</h1>
+  <p class="subtext">Keep your journey details together in one place.</p>
+  <div class="passport">
+    <div class="passport-top"><div><div class="eyebrow">CRUISECONNECT</div><h2 style="margin:8px 0 0">Digital Travel Passport</h2></div><div class="passport-mark">🌐</div></div>
+    <div class="passport-grid">
+      <div><div class="passport-label">Traveler</div><div class="passport-value">Guest Traveler</div></div>
+      <div><div class="passport-label">Journey</div><div class="passport-value">Caribbean Cruise</div></div>
+      <div><div class="passport-label">Travel status</div><div class="passport-value">Ready to explore</div></div>
+      <div><div class="passport-label">Passport ID</div><div class="passport-value">CC-2026-DEMO</div></div>
+    </div>
+    <div style="border-top:1px solid #cbdde7;margin-top:25px;padding-top:18px"><div class="passport-label">DESTINATION COLLECTION</div><div class="stamp-row"><div class="stamp">🌴<br>Caribbean</div><div class="stamp">🏝️<br>Islands</div><div class="stamp">⚓<br>At sea</div></div></div>
+  </div>
+  <p class="subtext" style="margin-top:15px">This is a digital souvenir concept, not an official travel document.</p>
+</section>
+
+<section class="page" id="map">
+  <div class="eyebrow">FIND YOUR WAY AROUND</div>
+  <h1>Ship Map</h1>
+  <p class="subtext">Explore a sample layout of places onboard.</p>
+  <div class="map-box">
+    <div class="map-deck">
+      <div class="map-room">🍽️ Dining</div><div class="map-room">🏊 Pool</div>
+      <div class="map-room">🎭 Theater</div><div class="map-room">☕ Café</div>
+      <div class="map-room">🎮 Lounge</div><div class="map-room">🛍️ Shops</div>
+    </div>
+    <div class="map-dot" style="left:20%;top:18%">1</div>
+    <div class="map-dot" style="right:18%;bottom:18%">2</div>
+  </div>
+  <div class="section-head"><h2>Explore onboard</h2></div>
+  <div class="grid">
+    <div class="card"><h3>Dining areas</h3><p class="subtext">Find restaurants and cafés.</p></div>
+    <div class="card"><h3>Entertainment</h3><p class="subtext">Discover shows and activities.</p></div>
+    <div class="card"><h3>Relaxation</h3><p class="subtext">Locate pools and lounge areas.</p></div>
+  </div>
+  <p class="subtext" style="margin-top:15px">Illustrative map only. Actual ship layouts vary by cruise line and vessel.</p>
+</section>
+
+<section class="page" id="ocean">
+  <div class="eyebrow">THE WORLD AT SEA</div>
+  <h1>OceanVerse</h1>
+  <p class="subtext">Your digital space for discovering what is happening during the journey.</p>
+  <div class="hero" style="min-height:220px">
+    <div class="hero-content"><div class="eyebrow">EXPLORE MORE</div><h1 style="font-size:30px">One ocean.<br>Endless possibilities.</h1><p>Discover activities, destinations and moments worth sharing.</p></div>
+  </div>
+  <div class="section-head"><h2>What's happening?</h2></div>
+  <div class="grid">
+    <div class="card"><span class="pill">DISCOVER</span><h3 style="margin-top:13px">Destination Guide</h3><p class="subtext">Explore places, local culture and points of interest.</p></div>
+    <div class="card"><span class="pill">EXPERIENCE</span><h3 style="margin-top:13px">Onboard Highlights</h3><p class="subtext">Find entertainment and activities throughout the ship.</p></div>
+    <div class="card"><span class="pill">CONNECT</span><h3 style="margin-top:13px">Traveler Community</h3><p class="subtext">Share interests and discover new connections.</p></div>
+  </div>
+</section>
+
+<section class="page" id="profile">
+  <div class="eyebrow">YOUR PERSONAL SPACE</div>
+  <h1>My Profile</h1>
+  <p class="subtext">Personalize your CruiseConnect experience.</p>
+  <div class="card profile-panel">
+    <div class="big-avatar">A</div>
+    <div><h2 style="margin:0">Guest Traveler</h2><p class="subtext" style="margin:5px 0">Your CruiseConnect profile</p><span class="pill">TRAVELER</span></div>
+  </div>
+  <div class="card" style="margin-top:18px;max-width:650px">
+    <h2>Profile information</h2>
+    <div class="field"><label>Display name</label><input id="profileName" value="Guest Traveler"></div>
+    <div class="field"><label>About me</label><textarea id="profileBio" rows="3" placeholder="Tell other travelers about yourself..."></textarea></div>
+    <div class="field"><label>Favorite travel experience</label><input id="profileFavorite" placeholder="Adventure, culture, food..."></div>
+    <button class="primary" onclick="saveProfile()">Save profile</button>
+  </div>
+</section>
+<footer>CRUISECONNECT · YOUR JOURNEY. YOUR PEOPLE.</footer>
+</div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const pageNames={
+ home:"Home / Overview",cruises:"Explore Cruises",match:"Cruise Match",
+ meetup:"Meet Up",chat:"Messages",passport:"Digital Passport",
+ map:"Ship Map",ocean:"OceanVerse",profile:"My Profile"
+};
+
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+ const page=document.getElementById(id);
+ if(!page)return;
+ page.classList.add("active");
+ const nav=document.querySelector('[data-page="'+id+'"]');
+ if(nav)nav.classList.add("active");
+ document.getElementById("breadcrumb").textContent="Home / "+pageNames[id];
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav button").forEach(button=>{
+ button.addEventListener("click",()=>showPage(button.dataset.page));
+});
+
+let toastTimer;
+function notify(message){
+ const toast=document.getElementById("toast");
+ toast.textContent=message;
+ toast.style.display="block";
+ clearTimeout(toastTimer);
+ toastTimer=setTimeout(()=>toast.style.display="none",2600);
+}
+function toggleTag(button){
+ button.classList.toggle("selected");
+ button.style.background=button.classList.contains("selected")?"#d8edf7":"#eff5f8";
+ button.style.color=button.classList.contains("selected")?"#174a6c":"#56748a";
+}
+function cruiseDetails(name){
+ notify(name+" selected. Add confirmed itinerary and pricing here.");
+}
+let joined=[];
+function joinEvent(name){
+ if(joined.includes(name)){notify("You already joined this activity.");return;}
+ joined.push(name);
+ document.getElementById("joinedEvents").innerHTML=joined.map(item=>'<div class="event"><div class="event-date">✓</div><div><strong>'+item+'</strong><p>Added to your demo activities</p></div></div>').join("");
+ notify("Added to your activities!");
+}
+let currentChat="Sofia";
+function selectChat(name){
+ currentChat=name;
+ document.getElementById("chatName").textContent=name+" M.";
+ const messages=document.getElementById("messages");
+ messages.innerHTML=name==="Sofia"
+ ?'<div class="bubble">Hey! Excited for the trip? 🌊</div><div class="bubble mine">Yes! Looking forward to exploring.</div><div class="bubble">Same here! Have you checked the activities?</div>'
+ :'<div class="bubble">Hey! Let’s explore the ship!</div><div class="bubble mine">That sounds like a plan!</div>';
+}
+function sendMessage(event){
+ event.preventDefault();
+ const input=document.getElementById("messageInput");
+ const value=input.value.trim();
+ if(!value)return;
+ const bubble=document.createElement("div");
+ bubble.className="bubble mine";
+ bubble.textContent=value;
+ document.getElementById("messages").appendChild(bubble);
+ input.value="";
+ document.getElementById("messages").scrollTop=document.getElementById("messages").scrollHeight;
+}
+function saveProfile(){
+ const name=document.getElementById("profileName").value.trim()||"Guest Traveler";
+ document.querySelector(".profile-panel h2").textContent=name;
+ document.querySelector(".user-mini div:last-child").innerHTML=name+"<small>Traveler profile</small>";
+ notify("Your profile has been updated in this demo!");
+}
+</script>
+</body>
+</html>
