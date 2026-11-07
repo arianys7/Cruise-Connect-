@@ -1,2 +1,493 @@
 <!DOCTYPE html>
 
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#071b35">
+
+<title>CruiseConnect</title>
+
+<style>
+
+*{box-sizing:border-box}
+
+body{margin:0;background:#f4f7fb;color:#102b49;font-family:Arial,sans-serif}
+
+header{background:#071b35;color:white;padding:19px 6%;display:flex;justify-content:space-between;align-items:center}
+
+.logo{font-size:23px;font-weight:800;letter-spacing:1px}
+
+.logo span{color:#62b9f3}
+
+header small{font-size:10px;letter-spacing:1px;color:#c5d8e9}
+
+nav{display:flex;gap:5px;overflow-x:auto;background:white;padding:11px 4%;position:sticky;top:0;z-index:5;box-shadow:0 3px 12px #0001}
+
+nav button{border:0;background:transparent;padding:12px 15px;border-radius:9px;color:#63788d;font-weight:bold;white-space:nowrap;cursor:pointer}
+
+nav button.active{background:#e7f3fc;color:#176cac}
+
+main{max-width:1100px;margin:auto;padding:25px 5% 60px}
+
+.page{display:none}.page.active{display:block}
+
+.eyebrow{font-size:11px;color:#176cac;font-weight:bold;letter-spacing:2px}
+
+h1{font-size:36px;margin:12px 0}
+
+h2{font-size:23px}
+
+p{color:#718399;line-height:1.6}
+
+.hero{min-height:390px;padding:32px;border-radius:20px;background:linear-gradient(90deg,#071b35ed,#071b3540),url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1400') center/cover;display:flex;flex-direction:column;justify-content:flex-end;color:white}
+
+.hero h1{font-size:clamp(36px,6vw,55px);max-width:580px;line-height:1.1}
+
+.hero p{color:#e5edf5;max-width:450px}
+
+.tag{font-size:11px;letter-spacing:2px;color:#65b9f5;font-weight:bold}
+
+.btn{background:#176cac;color:white;border:0;padding:13px 19px;border-radius:9px;font-weight:bold;cursor:pointer;margin-top:10px}
+
+.btn.white{background:white;color:#071b35}
+
+.info{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+
+.info div{background:white;border-radius:12px;padding:17px;flex:1;min-width:120px}
+
+.info strong{display:block;color:#176cac;font-size:25px}
+
+.info small{color:#718399}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:17px;margin-top:20px}
+
+.card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 5px 20px #071b350c}
+
+.card img{width:100%;height:165px;object-fit:cover}
+
+.content{padding:17px}
+
+.content p{font-size:13px}
+
+.panel{background:white;padding:21px;border-radius:15px;margin:18px 0;box-shadow:0 4px 15px #071b3508}
+
+.destination{display:flex;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid #edf1f5}
+
+.destination img{width:85px;height:70px;object-fit:cover;border-radius:10px}
+
+.destination div{flex:1}
+
+.destination p{font-size:12px;margin:5px 0}
+
+.stamps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+
+.stamp{background:#f6faff;border:2px dashed #a9bfd2;border-radius:13px;padding:20px;text-align:center}
+
+.stamp span{font-size:30px}
+
+.stamp p{font-size:12px}
+
+.progress{height:9px;background:#e7edf4;border-radius:20px;overflow:hidden}
+
+.progress span{display:block;width:40%;height:100%;background:#176cac}
+
+.profile{display:flex;align-items:center;gap:13px}
+
+.avatar{width:55px;height:55px;background:#e4f2ff;border-radius:50%;display:grid;place-items:center;font-size:25px}
+
+footer{text-align:center;padding:30px;color:#8a9aab;font-size:12px}
+
+input,select{padding:12px;border:1px solid #dce5ed;border-radius:8px;width:100%;margin:7px 0;font-size:14px}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">CRUISE<span>CONNECT</span></div>
+
+<small>YOUR JOURNEY STARTS HERE</small>
+
+</header>
+
+<nav>
+
+<button class="active" onclick="go('home',this)">Inicio</button>
+
+<button onclick="go('trip',this)">Mi viaje</button>
+
+<button onclick="go('passport',this)">Pasaporte digital</button>
+
+<button onclick="go('connect',this)">Conecta</button>
+
+<button onclick="go('experiences',this)">Experiencias</button>
+
+</nav>
+
+<main>
+
+<section id="home" class="page active">
+
+<div class="hero">
+
+<span class="tag">DISCOVER · CONNECT · EXPLORE</span>
+
+<h1>El mundo se disfruta mejor conectado.</h1>
+
+<p>Explora destinos, conoce viajeros y crea recuerdos inolvidables. Tu próxima aventura comienza aquí.</p>
+
+<button class="btn white" onclick="go('trip',document.querySelectorAll('nav button')[1])">Descubrir mi viaje →</button>
+
+</div>
+
+<div class="info">
+
+<div><strong>07</strong><small>Días de aventura</small></div>
+
+<div><strong>05</strong><small>Destinos</small></div>
+
+<div><strong>∞</strong><small>Experiencias</small></div>
+
+</div>
+
+<h2>Descubre CruiseConnect</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600">
+
+<div class="content"><span class="tag">EXPLORA</span><h3>Tu próxima aventura</h3><p>Descubre lo mejor de viajar en crucero.</p></div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600">
+
+<div class="content"><span class="tag">DESTINOS</span><h3>Un mundo por descubrir</h3><p>Cada parada es una nueva experiencia.</p></div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600">
+
+<div class="content"><span class="tag">CONEXIONES</span><h3>Viaja acompañado</h3><p>Comparte actividades con otros viajeros.</p></div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="trip" class="page">
+
+<span class="eyebrow">TRAVEL DETAILS</span>
+
+<h1>Mi viaje</h1>
+
+<p>Tu información de viaje en un solo lugar.</p>
+
+<div class="panel">
+
+<span class="tag">MY NEXT ADVENTURE</span>
+
+<h2>Bienvenido a bordo 🚢</h2>
+
+<p>Tu experiencia CruiseConnect comienza aquí.</p>
+
+<div class="info">
+
+<div><strong>07</strong><small>Días de viaje</small></div>
+
+<div><strong>05</strong><small>Paradas</small></div>
+
+<div><strong>01</strong><small>Gran aventura</small></div>
+
+</div>
+
+</div>
+
+<h2>Itinerario de destinos</h2>
+
+<div class="panel">
+
+<div class="destination">
+
+<img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=300">
+
+<div><b>Italia</b><p>Arquitectura, cultura y gastronomía.</p></div>
+
+</div>
+
+<div class="destination">
+
+<img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?w=300">
+
+<div><b>Grecia</b><p>Playas y paisajes mediterráneos.</p></div>
+
+</div>
+
+<div class="destination">
+
+<img src="https://images.unsplash.com/photo-1498307833015-e7b400441eb8?w=300">
+
+<div><b>Francia</b><p>Arte, historia y gastronomía.</p></div>
+
+</div>
+
+<div class="destination">
+
+<img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=300">
+
+<div><b>Roma</b><p>Una experiencia llena de historia.</p></div>
+
+</div>
+
+<div class="destination">
+
+<img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=300">
+
+<div><b>Barcelona</b><p>Una ciudad llena de energía.</p></div>
+
+</div>
+
+</div>
+
+<p>Nota: itinerario ilustrativo. Los destinos y fechas se pueden personalizar.</p>
+
+</section>
+
+<section id="passport" class="page">
+
+<span class="eyebrow">DIGITAL TRAVEL EXPERIENCE</span>
+
+<h1>Mi pasaporte digital</h1>
+
+<p>Colecciona recuerdos y sellos digitales mientras descubres nuevos destinos.</p>
+
+<div class="panel">
+
+<span class="tag">TRAVEL PROGRESS</span>
+
+<h2>Tu colección de destinos</h2>
+
+<div class="info">
+
+<div><strong id="count">0 / 5</strong><small>Destinos visitados</small></div>
+
+<div><strong id="percent">0%</strong><small>Progreso total</small></div>
+
+</div>
+
+<div class="progress"><span id="bar" style="width:0%"></span></div>
+
+</div>
+
+<div class="stamps">
+
+<div class="stamp"><span>🇮🇹</span><h3>Italia</h3><p id="s0">Sello pendiente</p><button class="btn" onclick="stamp(0)">Obtener sello</button></div>
+
+<div class="stamp"><span>🇬🇷</span><h3>Grecia</h3><p id="s1">Sello pendiente</p><button class="btn" onclick="stamp(1)">Obtener sello</button></div>
+
+<div class="stamp"><span>🇫🇷</span><h3>Francia</h3><p id="s2">Sello pendiente</p><button class="btn" onclick="stamp(2)">Obtener sello</button></div>
+
+<div class="stamp"><span>🇪🇸</span><h3>España</h3><p id="s3">Sello pendiente</p><button class="btn" onclick="stamp(3)">Obtener sello</button></div>
+
+<div class="stamp"><span>🇵🇹</span><h3>Portugal</h3><p id="s4">Sello pendiente</p><button class="btn" onclick="stamp(4)">Obtener sello</button></div>
+
+<div class="stamp"><span>🏆</span><h3>Recompensa</h3><p id="reward">Completa tu colección.</p></div>
+
+</div>
+
+<p>Demostración: los sellos se activan al pulsar el botón. En un servicio real se validarían las visitas.</p>
+
+</section>
+
+<section id="connect" class="page">
+
+<span class="eyebrow">MEET YOUR TRAVEL COMMUNITY</span>
+
+<h1>Conecta con viajeros</h1>
+
+<p>Descubre personas que comparten tus intereses y actividades favoritas.</p>
+
+<div class="panel">
+
+<h2>Tu perfil de viajero</h2>
+
+<div class="profile">
+
+<div class="avatar">👤</div>
+
+<div><b>Mi perfil</b><p>¡Listo para conocer el mundo!</p></div>
+
+</div>
+
+<input id="username" placeholder="Escribe tu nombre">
+
+<select id="interest">
+
+<option value="">Selecciona tu interés favorito</option>
+
+<option>Aventura</option>
+
+<option>Gastronomía</option>
+
+<option>Música y entretenimiento</option>
+
+<option>Cultura</option>
+
+<option>Deportes</option>
+
+<option>Fotografía</option>
+
+</select>
+
+<button class="btn" onclick="saveProfile()">Guardar perfil</button>
+
+<p id="profileMessage"></p>
+
+</div>
+
+<h2>Actividades para compartir</h2>
+
+<div class="grid">
+
+<div class="card"><img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600"><div class="content"><h3>Food Experience</h3><p>Descubre nuevos sabores y comparte una experiencia gastronómica.</p><button class="btn" onclick="join(this)">Me interesa</button></div></div>
+
+<div class="card"><img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=600"><div class="content"><h3>Music Night</h3><p>Disfruta de música y entretenimiento a bordo.</p><button class="btn" onclick="join(this)">Me interesa</button></div></div>
+
+<div class="card"><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600"><div class="content"><h3>Adventure Club</h3><p>Comparte excursiones y experiencias de aventura.</p><button class="btn" onclick="join(this)">Me interesa</button></div></div>
+
+</div>
+
+</section>
+
+<section id="experiences" class="page">
+
+<span class="eyebrow">ONBOARD EXPERIENCES</span>
+
+<h1>Experiencias a bordo</h1>
+
+<p>Descubre las actividades que pueden formar parte de tu viaje.</p>
+
+<div class="grid">
+
+<div class="card"><img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600"><div class="content"><span class="tag">GASTRONOMÍA</span><h3>Sabores del mundo</h3><p>Restaurantes, degustaciones y experiencias culinarias.</p></div></div>
+
+<div class="card"><img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?w=600"><div class="content"><span class="tag">ENTRETENIMIENTO</span><h3>Noches inolvidables</h3><p>Shows, música y actividades especiales.</p></div></div>
+
+<div class="card"><img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=600"><div class="content"><span class="tag">EXCURSIONES</span><h3>Explora cada destino</h3><p>Conoce lugares nuevos y culturas diferentes.</p></div></div>
+
+<div class="card"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600"><div class="content"><span class="tag">BIENESTAR</span><h3>Relax & Recharge</h3><p>Momentos para descansar y disfrutar.</p></div></div>
+
+<div class="card"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600"><div class="content"><span class="tag">DEPORTES</span><h3>Active Ocean</h3><p>Actividades deportivas y recreación.</p></div></div>
+
+<div class="card"><img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600"><div class="content"><span class="tag">SOCIAL</span><h3>Meet & Connect</h3><p>Conoce viajeros y comparte momentos.</p></div></div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<div class="logo">CRUISE<span>CONNECT</span></div>
+
+<p>DISCOVER · CONNECT · EXPLORE</p>
+
+©️ 2026 CruiseConnect. Travel beyond the ordinary.
+
+</footer>
+
+<script>
+
+function go(id,button){
+
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+
+ document.getElementById(id).classList.add('active');
+
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+
+ if(button)button.classList.add('active');
+
+ window.scrollTo({top:0,behavior:'smooth'});
+
+}
+
+let collected=[false,false,false,false,false];
+
+function stamp(i){
+
+ if(!collected[i]){
+
+ collected[i]=true;
+
+ document.getElementById('s'+i).textContent='✓ Destino coleccionado';
+
+ }
+
+ let total=collected.filter(Boolean).length;
+
+ document.getElementById('count').textContent=total+' / 5';
+
+ document.getElementById('percent').textContent=(total*20)+'%';
+
+ document.getElementById('bar').style.width=(total*20)+'%';
+
+ if(total===5){
+
+ document.getElementById('reward').textContent='🏆 ¡Colección completada!';
+
+ }
+
+}
+
+function saveProfile(){
+
+ let name=document.getElementById('username').value.trim();
+
+ let interest=document.getElementById('interest').value;
+
+ if(!name||!interest){
+
+ document.getElementById('profileMessage').textContent='Completa tu nombre y selecciona un interés.';
+
+ return;
+
+ }
+
+ document.getElementById('profileMessage').textContent='¡Perfil guardado! Bienvenido/a, '+name+'. Tu interés es '+interest+'.';
+
+}
+
+function join(button){
+
+ button.textContent='¡Actividad seleccionada! ✓';
+
+ button.disabled=true;
+
+ button.style.background='#26845d';
+
+}
+
+</script>
+
+</body>
+
+</html>
