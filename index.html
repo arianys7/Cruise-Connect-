@@ -762,7 +762,329 @@ function join(button){
 }
 
 </script>
+style>
 
+.cc-extra{padding:20px 0}
+
+.cc-extra h2{color:#102b49}
+
+.cc-box{
+
+ background:white;padding:18px;border-radius:16px;
+
+ margin:15px 0;box-shadow:0 3px 15px #102b4910;
+
+}
+
+.cc-btn{
+
+ background:#176cac;color:white;border:0;
+
+ padding:12px 17px;border-radius:9px;
+
+ margin:5px 3px;font-weight:bold;
+
+}
+
+.cc-tag{
+
+ display:inline-block;background:#e8f4fc;
+
+ color:#176cac;padding:7px 11px;
+
+ border-radius:20px;margin:4px;font-size:12px;
+
+}
+
+.cc-person{
+
+ display:flex;gap:15px;align-items:center;
+
+ padding:13px 0;border-bottom:1px solid #eee;
+
+}
+
+.cc-avatar{
+
+ width:65px;height:65px;border-radius:50%;
+
+ background:#e4f2ff;display:grid;
+
+ place-items:center;font-size:30px;
+
+}
+
+.cc-map{
+
+ display:grid;grid-template-columns:1fr 1fr;
+
+ gap:12px;margin-top:15px;
+
+}
+
+.cc-place{
+
+ background:#eaf4fc;padding:20px 8px;
+
+ border-radius:12px;text-align:center;
+
+ cursor:pointer;
+
+}
+
+.cc-place strong{display:block;margin-top:8px}
+
+.cc-message{
+
+ background:#eaf4fc;padding:10px;
+
+ border-radius:12px;margin:8px 0;
+
+}
+
+.cc-progress{
+
+ height:10px;background:#e5edf5;
+
+ border-radius:20px;overflow:hidden;
+
+}
+
+.cc-progress div{
+
+ height:100%;background:#176cac;width:0%;
+
+}
+
+.cc-extra input{
+
+ width:100%;padding:12px;
+
+ border:1px solid #ddd;border-radius:9px;
+
+ margin:7px 0;
+
+}
+
+</style>
+
+<script>
+
+(function(){
+
+const main=document.querySelector("main");
+
+const nav=document.querySelector("nav");
+
+if(!main || !nav)return;
+
+const features=[
+
+ ["cruise-match","Cruise Match"],
+
+ ["meet-up","Meet Up"],
+
+ ["ship-map","Mapa del barco"],
+
+ ["cruise-chat","Cruise Chat"],
+
+ ["ocean-verse","OceanVerse"]
+
+];
+
+features.forEach(([id,name])=>{
+
+ const button=document.createElement("button");
+
+ button.textContent=name;
+
+ button.onclick=()=>ccOpen(id,button);
+
+ nav.appendChild(button);
+
+});
+
+const html=`
+
+<section id="cruise-match" class="page cc-extra">
+
+ <span class="eyebrow">TRAVEL CONNECTIONS</span>
+
+ <h1>Cruise Match</h1>
+
+ <p>Encuentra viajeros que compartan tus intereses.</p>
+
+ <div class="cc-box">
+
+  <h3>Mis intereses</h3>
+
+  <select id="cc-interest">
+
+   <option>Aventura</option>
+
+   <option>Gastronomía</option>
+
+   <option>Música</option>
+
+   <option>Deportes</option>
+
+   <option>Cultura</option>
+
+   <option>Fotografía</option>
+
+  </select>
+
+  <button class="cc-btn" onclick="ccFind()">Buscar matches</button>
+
+ </div>
+
+ <div id="cc-profiles"></div>
+
+ <div class="cc-box">
+
+  <h3>Mis conexiones</h3>
+
+  <p id="cc-connections">Todavía no tienes conexiones.</p>
+
+ </div>
+
+</section>
+
+<section id="meet-up" class="page cc-extra">
+
+ <span class="eyebrow">GROUP EXPERIENCES</span>
+
+ <h1>Meet Up</h1>
+
+ <p>Descubre actividades y encuentros grupales.</p>
+
+ <div class="cc-box">
+
+  <h3>🍽️ Food Lovers</h3>
+
+  <p>Encuentro para descubrir nuevas experiencias gastronómicas.</p>
+
+  <p>📍 Restaurante principal</p>
+
+  <p>🕒 6:00 PM</p>
+
+  <button class="cc-btn" onclick="ccJoin(this)">Unirme</button>
+
+ </div>
+
+ <div class="cc-box">
+
+  <h3>🎵 Music Night</h3>
+
+  <p>Comparte una noche de música y entretenimiento.</p>
+
+  <p>📍 Teatro del barco</p>
+
+  <p>🕒 8:00 PM</p>
+
+  <button class="cc-btn" onclick="ccJoin(this)">Unirme</button>
+
+ </div>
+
+ <div class="cc-box">
+
+  <h3>📸 Travel Photography</h3>
+
+  <p>Comparte fotografías de los destinos del viaje.</p>
+
+  <p>📍 Cubierta exterior</p>
+
+  <button class="cc-btn" onclick="ccJoin(this)">Unirme</button>
+
+ </div>
+
+</section>
+
+<section id="ship-map" class="page cc-extra">
+
+ <span class="eyebrow">SHIP DIRECTORY</span>
+
+ <h1>Mapa del barco</h1>
+
+ <p>Explora las diferentes áreas del crucero.</p>
+
+ <div class="cc-map">
+
+  <div class="cc-place" onclick="ccLocation('Piscina')">
+
+   🏊<strong>Piscina</strong>
+
+  </div>
+
+  <div class="cc-place" onclick="ccLocation('Restaurantes')">
+
+   🍽️<strong>Restaurantes</strong>
+
+  </div>
+
+  <div class="cc-place" onclick="ccLocation('Teatro')">
+
+   🎭<strong>Teatro</strong>
+
+  </div>
+
+  <div class="cc-place" onclick="ccLocation('Gimnasio')">
+
+   🏋️<strong>Gimnasio</strong>
+
+  </div>
+
+  <div class="cc-place" onclick="ccLocation('Spa')">
+
+   💆<strong>Spa</strong>
+
+  </div>
+
+  <div class="cc-place" onclick="ccLocation('Zona deportiva')">
+
+   ⚽<strong>Deportes</strong>
+
+  </div>
+
+ </div>
+
+ <div class="cc-box">
+
+  <h3>Ubicación seleccionada</h3>
+
+  <p id="cc-location">Selecciona un área del barco.</p>
+
+ </div>
+
+ <p>Mapa demostrativo, no representa la distribución real de un barco.</p>
+
+</section>
+
+<section id="cruise-chat" class="page cc-extra">
+
+ <span class="eyebrow">MESSAGING</span>
+
+ <h1>Cruise Chat</h1>
+
+ <p>Una demostración de cómo funcionaría la mensajería.</p>
+
+ <div class="cc-box">
+
+  <h3>Conversación de demostración</h3>
+
+  <div id="cc-chat-messages">
+
+   <div class="cc-message">
+
+    ¡Bienvenido a CruiseConnect! 🚢
+
+   </div>
+
+  </div>
+
+  <input id="cc-chat-input" placeholder="Escribe un mensaje...">
+
+  <button class="cc-btn" onclick="ccSend()">Enviar
 </body>
 
 </html>
